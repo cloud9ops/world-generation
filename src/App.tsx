@@ -5,6 +5,8 @@ import { ChronicleTerminal } from './components/ChronicleTerminal';
 import type { ChronicleLog } from './components/ChronicleTerminal';
 import { Codex } from './components/Codex';
 import { AetherNetwork } from './components/AetherNetwork';
+import { useAuth } from './context/AuthContext';
+import { LogOut, User } from 'lucide-react';
 
 import { generateWorld } from './engine/worldGenerator';
 import type { 
@@ -28,6 +30,8 @@ import {
 import type { ExploredWorld } from './engine/secretEngine';
 
 function App() {
+  const { authUser, logout } = useAuth();
+
   // Main World & UI States
   const [world, setWorld] = useState<WorldState | null>(null);
   const [isForging, setIsForging] = useState(false);
@@ -66,6 +70,12 @@ function App() {
   // Player Name State
   const [playerName, setPlayerName] = useState(() => localStorage.getItem('cosmogony_player_name') || 'Captain Ahab');
 
+  useEffect(() => {
+    if (authUser?.username) {
+      setPlayerName(authUser.username);
+    }
+  }, [authUser]);
+
   const handlePlayerNameChange = (name: string) => {
     const cleanName = name || 'Anonymous Explorer';
     setPlayerName(cleanName);
@@ -84,7 +94,7 @@ function App() {
       return "Seeker of Whispers";
     }
 
-    if (!world) return "Aetherial Wanderer";
+    if (!world) return authUser?.title || "Aetherial Wanderer";
 
     const visitedCount = world.nodes.filter(n => n.status !== 'unexplored').length;
     const questCount = activeQuests.filter(q => q.completed).length;
@@ -119,7 +129,7 @@ function App() {
       return "Starlit Wayfarer";
     }
 
-    return "Timeline Recruit";
+    return authUser?.title || "Timeline Recruit";
   };
 
   // Sync collected fragments and explored worlds on mount
@@ -1417,6 +1427,77 @@ function App() {
             : '1fr 400px'
       }}
     >
+      {/* Sleek Floating Explorer Soul Panel Overlay */}
+      {!showAetherNetwork && (
+        <div 
+          style={{
+            position: 'absolute',
+            top: '24px',
+            right: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            zIndex: 100,
+            background: 'var(--bg-panel)',
+            padding: '6px 14px',
+            borderRadius: '8px',
+            border: '1px solid var(--border-glow-purple)',
+            boxShadow: '0 4px 20px rgba(167, 85, 247, 0.15)',
+            backdropFilter: 'blur(12px)',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          {/* Avatar Orb */}
+          <div style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, var(--color-purple) 0%, rgba(0, 242, 254, 0.3) 100%)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 8px rgba(167, 85, 247, 0.4)',
+          }}>
+            <User size={14} style={{ color: 'white' }} />
+          </div>
+
+          {/* User Details */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', fontFamily: 'var(--font-sans)' }}>
+            <span style={{ fontSize: '12px', color: 'var(--text-primary)', fontWeight: 700, lineHeight: '1.2' }}>
+              {authUser?.username || playerName}
+            </span>
+            <span style={{ fontSize: '9px', color: 'var(--color-amber)', letterSpacing: '0.5px', textTransform: 'uppercase', fontWeight: 600 }}>
+              {getPlayerTitle()}
+            </span>
+          </div>
+
+          {/* Disconnect / Logout Button */}
+          <button
+            onClick={() => logout()}
+            className="btn-cosmic btn-outline"
+            style={{
+              padding: '4px 8px',
+              fontSize: '9px',
+              height: 'auto',
+              borderRadius: '4px',
+              border: '1px solid rgba(255, 75, 92, 0.3)',
+              background: 'rgba(255, 75, 92, 0.05)',
+              color: 'var(--color-crimson)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              cursor: 'pointer',
+              marginLeft: '6px',
+              transition: 'all 0.2s',
+            }}
+            title="Disconnect Consciousness Grid"
+          >
+            <LogOut size={10} /> Disconnect
+          </button>
+        </div>
+      )}
+
       {/* Sleek Floating Weave Spindle Toggle */}
       {!isLoomExpanded && !showAetherNetwork && (
         <button 

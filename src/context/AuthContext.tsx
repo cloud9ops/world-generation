@@ -23,7 +23,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const stored = localStorage.getItem('cosmogony_user');
     if (stored) {
-      setAuthUser(JSON.parse(stored));
+      try {
+        setAuthUser(JSON.parse(stored));
+      } catch (err) {
+        console.error("Failed to parse stored cosmogony_user:", err);
+        localStorage.removeItem('cosmogony_user');
+      }
     }
   }, []);
 

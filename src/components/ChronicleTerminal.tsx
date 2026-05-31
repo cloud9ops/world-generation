@@ -81,9 +81,46 @@ export const ChronicleTerminal: React.FC<ChronicleTerminalProps> = ({
   return (
     <div className="glass-panel glass-panel-glow-purple right-column" style={{ padding: '16px', gap: '12px', display: 'flex', flexDirection: 'column' }}>
       {/* Panel Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
-        <Terminal className="animate-pulse-glow" style={{ color: 'var(--color-purple)' }} size={18} />
-        <h2 style={{ fontSize: '18px', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Chronicle Terminal</h2>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-light)', paddingBottom: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Terminal className="animate-pulse-glow" style={{ color: 'var(--color-purple)' }} size={18} />
+          <h2 style={{ fontSize: '18px', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '1.5px', margin: 0 }}>Chronicle Terminal</h2>
+        </div>
+        {stats && (
+          <button 
+            onClick={() => setShowStatsModal(true)}
+            style={{ 
+              padding: '4px 10px', 
+              fontSize: '11px', 
+              height: 'auto', 
+              borderRadius: '6px',
+              border: '1px solid var(--border-glow-purple)',
+              boxShadow: '0 0 10px rgba(167, 85, 247, 0.2)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'rgba(167, 85, 247, 0.08)',
+              color: 'var(--text-primary)',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontFamily: 'var(--font-sans)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--color-purple)';
+              e.currentTarget.style.color = '#000';
+              e.currentTarget.style.boxShadow = '0 0 15px var(--color-purple-glow)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(167, 85, 247, 0.08)';
+              e.currentTarget.style.color = 'var(--text-primary)';
+              e.currentTarget.style.boxShadow = '0 0 10px rgba(167, 85, 247, 0.2)';
+            }}
+            title="Click to view full RPG Survivor Attributes & Side Story"
+          >
+            📊 Explorer Stats
+          </button>
+        )}
       </div>
 
       {/* Dynamic RPG Character Attributes Tracker (Clickable Trigger) */}
@@ -151,28 +188,48 @@ export const ChronicleTerminal: React.FC<ChronicleTerminalProps> = ({
             left: '16px',
             right: '16px',
             bottom: '16px',
-            background: 'rgba(10, 8, 16, 0.95)',
-            backdropFilter: 'blur(25px)',
-            WebkitBackdropFilter: 'blur(25px)',
-            border: '1px solid rgba(155, 81, 224, 0.25)',
+            background: 'rgba(10, 8, 16, 0.98)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            border: '1px solid rgba(155, 81, 224, 0.35)',
             borderRadius: '12px',
-            padding: '16px',
+            padding: '18px',
             zIndex: 1000,
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
-            overflowY: 'auto'
+            gap: '14px',
+            overflowY: 'auto',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(155, 81, 224, 0.2)',
           }}
         >
           {/* Modal Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-light)', paddingBottom: '8px' }}>
-            <span style={{ fontSize: '11px', color: 'var(--color-purple)', fontWeight: 'bold', fontFamily: 'var(--font-serif)', letterSpacing: '1px' }}>
-              🌌 EXPLORER BIO & COGNITIVE DATA
+            <span style={{ fontSize: '11px', color: 'var(--color-purple)', fontWeight: 'bold', fontFamily: 'var(--font-serif)', letterSpacing: '1.5px' }}>
+              🌌 EXPLORER SOUL MATRIX & COGNITIVE DATA
             </span>
             <button 
               onClick={() => setShowStatsModal(false)}
-              className="btn-cosmic btn-outline"
-              style={{ padding: '2px 8px', fontSize: '9px', height: 'auto', borderRadius: '4px' }}
+              style={{
+                padding: '3px 10px',
+                fontSize: '10px',
+                height: 'auto',
+                borderRadius: '4px',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                background: 'rgba(255, 255, 255, 0.05)',
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'var(--color-crimson)';
+                e.currentTarget.style.borderColor = 'var(--color-crimson)';
+                e.currentTarget.style.color = '#000';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.color = 'white';
+              }}
             >
               Close [X]
             </button>
@@ -180,65 +237,125 @@ export const ChronicleTerminal: React.FC<ChronicleTerminalProps> = ({
 
           {/* Profile details */}
           {characterProfile && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '8px 10px', borderRadius: '6px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10.5px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Alignment Class:</span>
-                <span style={{ color: 'var(--color-teal)', fontWeight: 'bold' }}>{characterProfile.className}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', background: 'rgba(167, 85, 247, 0.04)', border: '1px solid rgba(167, 85, 247, 0.15)', padding: '10px 12px', borderRadius: '8px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Alignment Core class:</span>
+                <span style={{ color: 'var(--color-teal)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{characterProfile.className}</span>
               </div>
-              <p style={{ fontSize: '10px', color: 'var(--text-secondary)', lineHeight: '1.4', margin: '4px 0 0 0', fontStyle: 'italic' }}>
-                "{characterProfile.sideStory}"
-              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <span style={{ fontSize: '9px', color: 'var(--color-purple)', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Chronicle Origins:</span>
+                <p style={{ fontSize: '10.5px', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0, fontStyle: 'italic', background: 'rgba(0,0,0,0.2)', padding: '8px', borderRadius: '4px', borderLeft: '2px solid var(--color-purple)' }}>
+                  "{characterProfile.sideStory}"
+                </p>
+              </div>
             </div>
           )}
 
           {/* RPG Core Survival Stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <span style={{ fontSize: '10px', color: 'var(--text-primary)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
               ❤️ Survival Parameters:
             </span>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '10px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '6px 8px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Health (VIT):</span>
-                <span style={{ color: 'var(--color-success)', fontWeight: 'bold' }}>{characterProfile ? characterProfile.baseHealth : 100} / 100</span>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '10.5px' }}>
+              
+              {/* Health Parameter */}
+              <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '8px', borderRadius: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Health (VIT):</span>
+                  <span style={{ color: 'var(--color-success)', fontWeight: 'bold' }}>{characterProfile ? characterProfile.baseHealth : 100} / 100</span>
+                </div>
+                {/* Health Bar Meter */}
+                <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '100%', background: 'var(--color-success)', boxShadow: '0 0 5px var(--color-success)' }} />
+                </div>
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '6px 8px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Strength (STR):</span>
-                <span style={{ color: 'white', fontWeight: 'bold' }}>
-                  {characterProfile ? characterProfile.baseStrength + Math.round(stats.dimensionalResolve / 10) : 10 + Math.round(stats.dimensionalResolve / 10)}
-                </span>
-              </div>
-              <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '6px 8px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Agility (AGI):</span>
-                <span style={{ color: 'white', fontWeight: 'bold' }}>
-                  {characterProfile ? characterProfile.baseAgility + Math.round(stats.chronosInsight / 12) : 10 + Math.round(stats.chronosInsight / 12)}
-                </span>
-              </div>
-              <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '6px 8px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Intellect (INT):</span>
-                <span style={{ color: 'white', fontWeight: 'bold' }}>
-                  {characterProfile ? characterProfile.baseIntellect + Math.round(stats.aetherResonance / 8) : 10 + Math.round(stats.aetherResonance / 8)}
-                </span>
-              </div>
+
+              {/* Strength Parameter */}
+              {(() => {
+                const baseStr = characterProfile ? characterProfile.baseStrength : 10;
+                const bonusStr = Math.round(stats.dimensionalResolve / 10);
+                const finalStr = baseStr + bonusStr;
+                const strPercent = Math.min(100, (finalStr / 35) * 100);
+                return (
+                  <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '8px', borderRadius: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Strength (STR):</span>
+                      <span style={{ color: 'white', fontWeight: 'bold' }}>
+                        {finalStr} <span style={{ fontSize: '8.5px', color: 'var(--color-crimson)', fontWeight: 'normal' }}>(+{bonusStr} DR)</span>
+                      </span>
+                    </div>
+                    {/* Strength Bar Meter */}
+                    <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                      <div style={{ width: `${strPercent}%`, height: '100%', background: 'var(--color-crimson)', boxShadow: '0 0 5px var(--color-crimson-glow)' }} />
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Agility Parameter */}
+              {(() => {
+                const baseAgi = characterProfile ? characterProfile.baseAgility : 10;
+                const bonusAgi = Math.round(stats.chronosInsight / 12);
+                const finalAgi = baseAgi + bonusAgi;
+                const agiPercent = Math.min(100, (finalAgi / 35) * 100);
+                return (
+                  <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '8px', borderRadius: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Agility (AGI):</span>
+                      <span style={{ color: 'white', fontWeight: 'bold' }}>
+                        {finalAgi} <span style={{ fontSize: '8.5px', color: 'var(--color-amber)', fontWeight: 'normal' }}>(+{bonusAgi} CI)</span>
+                      </span>
+                    </div>
+                    {/* Agility Bar Meter */}
+                    <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                      <div style={{ width: `${agiPercent}%`, height: '100%', background: 'var(--color-amber)', boxShadow: '0 0 5px var(--color-amber-glow)' }} />
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Intellect Parameter */}
+              {(() => {
+                const baseInt = characterProfile ? characterProfile.baseIntellect : 10;
+                const bonusInt = Math.round(stats.aetherResonance / 8);
+                const finalInt = baseInt + bonusInt;
+                const intPercent = Math.min(100, (finalInt / 35) * 100);
+                return (
+                  <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-light)', padding: '8px', borderRadius: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Intellect (INT):</span>
+                      <span style={{ color: 'white', fontWeight: 'bold' }}>
+                        {finalInt} <span style={{ fontSize: '8.5px', color: 'var(--color-teal)', fontWeight: 'normal' }}>(+{bonusInt} AR)</span>
+                      </span>
+                    </div>
+                    {/* Intellect Bar Meter */}
+                    <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                      <div style={{ width: `${intPercent}%`, height: '100%', background: 'var(--color-teal)', boxShadow: '0 0 5px var(--color-teal-glow)' }} />
+                    </div>
+                  </div>
+                );
+              })()}
+
             </div>
           </div>
 
           {/* Dynamic Attributes Meanings */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', borderTop: '1px solid var(--border-light)', paddingTop: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid var(--border-light)', paddingTop: '10px' }}>
             <span style={{ fontSize: '10px', color: 'var(--text-primary)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
               📊 Attributes Ledger:
             </span>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '9.5px', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-              <div>
-                <span style={{ color: 'var(--color-purple)', fontWeight: 'bold' }}>🔮 Aether Resonance ({stats.aetherResonance})</span>: Measures cosmic magical affinity. Derived from genre presets and collected shards. Boosts magical capability and intellect.
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '9.5px', color: 'var(--text-secondary)', lineHeight: '1.45' }}>
+              <div style={{ background: 'rgba(167, 85, 247, 0.02)', padding: '6px 8px', borderRadius: '4px', borderLeft: '2.5px solid var(--color-purple)' }}>
+                <span style={{ color: 'var(--color-purple)', fontWeight: 'bold' }}>🔮 Aether Resonance ({stats.aetherResonance})</span>: Measures cosmic arcane affinity. Derived from magicRatio + shards. Amplifies magical core processing and boosts <span style={{ fontWeight: 'bold' }}>Intellect (INT)</span>.
               </div>
-              <div>
-                <span style={{ color: 'var(--color-teal)', fontWeight: 'bold' }}>⚙️ Techno-Cognition ({stats.technoCognition})</span>: Measures cybernetic grid processing index. Derived from genre tech ratios and items in pack.
+              <div style={{ background: 'rgba(0, 242, 254, 0.02)', padding: '6px 8px', borderRadius: '4px', borderLeft: '2.5px solid var(--color-teal)' }}>
+                <span style={{ color: 'var(--color-teal)', fontWeight: 'bold' }}>⚙️ Techno-Cognition ({stats.technoCognition})</span>: Cybernetic grid processing index. Derived from techRatio + items. Drives high-tech interaction success rates.
               </div>
-              <div>
-                <span style={{ color: 'var(--color-amber)', fontWeight: 'bold' }}>⏳ Chronos Insight ({stats.chronosInsight})</span>: Reflects timeline coordinate alignment level. Boosts evasion and spatial agility parameter.
+              <div style={{ background: 'rgba(255, 184, 0, 0.02)', padding: '6px 8px', borderRadius: '4px', borderLeft: '2.5px solid var(--color-amber)' }}>
+                <span style={{ color: 'var(--color-amber)', fontWeight: 'bold' }}>⏳ Chronos Insight ({stats.chronosInsight})</span>: Reflects timeline coordinate alignment level. Explored nodes + quests. Enhances evasion, speed, and <span style={{ fontWeight: 'bold' }}>Agility (AGI)</span>.
               </div>
-              <div>
-                <span style={{ color: 'var(--color-crimson)', fontWeight: 'bold' }}>🛡️ Dimensional Resolve ({stats.dimensionalResolve})</span>: Represents survival adaptivity. Boosts physical combat strength.
+              <div style={{ background: 'rgba(255, 75, 92, 0.02)', padding: '6px 8px', borderRadius: '4px', borderLeft: '2.5px solid var(--color-crimson)' }}>
+                <span style={{ color: 'var(--color-crimson)', fontWeight: 'bold' }}>🛡️ Dimensional Resolve ({stats.dimensionalResolve})</span>: Player adaptivity ratio. Derived from dangerLevel + quests. Strengthens active armor ratings and boosts <span style={{ fontWeight: 'bold' }}>Strength (STR)</span>.
               </div>
             </div>
           </div>
