@@ -87,4 +87,4 @@ Production assets will compile successfully into the `dist/` directory, ready to
 *   **Sentient Aetheric Intelligence**: An agentic cognitive system that gives NPCs autonomous goal-planning and vector-retrieval reasoning profiles.
 
 ---
-*Developed by Google DeepMind Advanced Agentic Coding Pair-Programming Teams.*
+
